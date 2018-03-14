@@ -12,5 +12,5 @@ function getQueryStrings() {
 let queries = getQueryStrings()
 
 if (queries['fail'] === '0') {
-  alert('您的帳號或密碼輸入錯誤！')
+  alert('您的帳號, 密碼或驗證碼輸入錯誤！')
 }
