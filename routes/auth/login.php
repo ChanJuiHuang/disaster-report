@@ -16,16 +16,16 @@ if (!(empty($_POST['account']) || empty($_POST['password']) || empty($_POST['cap
 
     session_start();
     if (!$conn) {
-      throw new Exception("Connection Error!");
+      throw new Exception("Connection Error!", 0);
     }
     if (!(($userStmt->rowCount() === 1) && $user)) {
-      throw new Exception("Account or Password is wrong!");
-    }
-    if ($_COOKIE['x_csrf_token'] !== $_SESSION['csrfToken']) {
-      throw new Exception("CSRF Token is wrong!");
+      throw new Exception("Account or Password is wrong!", 1);
     }
     if ($captcha !== $_SESSION['captcha']) {
-      throw new Exception("Captcha is wrong!");
+      throw new Exception("Captcha is wrong!", 2);
+    }
+    if ($_COOKIE['x_csrf_token'] !== $_SESSION['csrfToken']) {
+      throw new Exception("CSRF Token is wrong!", 3);
     }
     $_SESSION['name'] = $user['memname'];
     $_SESSION['account'] = $account;
@@ -39,26 +39,26 @@ if (!(empty($_POST['account']) || empty($_POST['password']) || empty($_POST['cap
 
     // session_start();
     // if (!$conn) {
-    //   throw new Exception("Connection Error!");
+    //   throw new Exception("Connection Error!", 0);
     // }
     // if (!(odbc_num_rows($userStmt) === 1 && $userStmt && $result)) {
-    //   throw new Exception("Account or Password is wrong!");
-    // }
-    // if ($_COOKIE['x_csrf_token'] !== $_SESSION['csrfToken']) {
-    //   throw new Exception("CSRF Token is wrong!");
+    //   throw new Exception("Account or Password is wrong!", 1);
     // }
     // if ($captcha !== $_SESSION['captcha']) {
-    //   throw new Exception("Captcha is wrong!");
+    //   throw new Exception("Captcha is wrong!", 2);
+    // }
+    // if ($_COOKIE['x_csrf_token'] !== $_SESSION['csrfToken']) {
+    //   throw new Exception("CSRF Token is wrong!", 3);
     // }
     // $_SESSION['name'] = $user['MemName'];
     // $_SESSION['account'] = $account;
     // $_SESSION['is_login'] = true;
     // $_SESSION['is_center'] = $user['UnitID'] === '01' ? true : false;
-    session_write_close();
     header('Location: /disaster_report/testLogin.php');
   } catch (Exception $e) {
-    header('Location: /disaster_report/index.php?fail=0');
+    header('Location: /disaster_report/index.php?fail=' . $e->getCode());
   }
 } else {
-  header('Location: /disaster_report/index.php?fail=0');
+  header('Location: /disaster_report/index.php?fail=1');
 }
+session_write_close();
