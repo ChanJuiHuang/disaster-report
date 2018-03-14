@@ -18,7 +18,7 @@ if (!(empty($_POST['account']) || empty($_POST['password']) || empty($_POST['cap
     if (!$conn) {
       throw new Exception("Connection Error!");
     }
-    if (!($userStmt->rowCount() === 1) && $user) {
+    if (!(($userStmt->rowCount() === 1) && $user)) {
       throw new Exception("Account or Password is wrong!");
     }
     if ($_COOKIE['x_csrf_token'] !== $_SESSION['csrfToken']) {
