@@ -11,6 +11,12 @@ function getQueryStrings() {
 
 let queries = getQueryStrings()
 
-if (queries['fail'] === '0') {
-  alert('您的帳號, 密碼或驗證碼輸入錯誤！')
+if (queries['fail'] === '7') {
+  alert('伺服器連線錯誤，請聯絡管理員或嘗試重新登入！')
+} else if (queries['fail'] === '1') {
+  alert('您的帳號或密碼輸入錯誤！')
+} else if (queries['fail'] === '2') {
+  alert('您的驗證碼輸入錯誤！')
 }
+
+history.pushState('', '', '/disaster_report/index.php')
