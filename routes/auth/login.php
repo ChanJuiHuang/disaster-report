@@ -2,9 +2,10 @@
 
 include($_SERVER['DOCUMENT_ROOT'] . '/config/db_config.php');
 
-if (!(empty($_POST['account']) || empty($_POST['password']))) {
+if (!(empty($_POST['account']) || empty($_POST['password']) || empty($_POST['captcha']))) {
   $account = null;
   $password = null;
+  $captcha = null;
   extract($_POST, EXTR_IF_EXISTS);
 
   try {
@@ -23,6 +24,13 @@ if (!(empty($_POST['account']) || empty($_POST['password']))) {
     if ($_COOKIE['x_csrf_token'] !== $_SESSION['csrfToken']) {
       throw new Exception("CSRF Token is wrong!");
     }
+    if ($captcha !== $_SESSION['captcha']) {
+      throw new Exception("Captcha is wrong!");
+    }
+    $_SESSION['name'] = $user['memname'];
+    $_SESSION['account'] = $account;
+    $_SESSION['is_login'] = true;
+    $_SESSION['is_center'] = $user['unitid'] === '01' ? true : false;
 
     // $conn = odbc_connect($odbc_dsn, $odbc_user, $odbc_password);
     // $userStmt = odbc_prepare($conn, 'SELECT MemName, MemID, UnitID from MemberData WHERE MemID=? AND Pwd=?;');
@@ -39,15 +47,18 @@ if (!(empty($_POST['account']) || empty($_POST['password']))) {
     // if ($_COOKIE['x_csrf_token'] !== $_SESSION['csrfToken']) {
     //   throw new Exception("CSRF Token is wrong!");
     // }
-    $_SESSION['name'] = $user['MemName'];
-    $_SESSION['account'] = $account;
-    $_SESSION['is_login'] = true;
-    $_SESSION['is_center'] = $user['UnitID'] === '01' ? true : false;
+    // if ($captcha !== $_SESSION['captcha']) {
+    //   throw new Exception("Captcha is wrong!");
+    // }
+    // $_SESSION['name'] = $user['MemName'];
+    // $_SESSION['account'] = $account;
+    // $_SESSION['is_login'] = true;
+    // $_SESSION['is_center'] = $user['UnitID'] === '01' ? true : false;
     session_write_close();
+    header('Location: /testLogin.php');
   } catch (Exception $e) {
     header('Location: /index.php?fail=0');
   }
-  header('Location: /testLogin.php');
 } else {
   header('Location: /index.php?fail=0');
 }
