@@ -1,6 +1,6 @@
 <?php
 
-include($_SERVER['DOCUMENT_ROOT'] . '/config/db_config.php');
+include($_SERVER['DOCUMENT_ROOT'] . '/disaster_report/config/db_config.php');
 
 if (!(empty($_POST['account']) || empty($_POST['password']) || empty($_POST['captcha']))) {
   $account = null;
@@ -55,10 +55,10 @@ if (!(empty($_POST['account']) || empty($_POST['password']) || empty($_POST['cap
     // $_SESSION['is_login'] = true;
     // $_SESSION['is_center'] = $user['UnitID'] === '01' ? true : false;
     session_write_close();
-    header('Location: /testLogin.php');
+    header('Location: /disaster_report/testLogin.php');
   } catch (Exception $e) {
-    header('Location: /index.php?fail=0');
+    header('Location: /disaster_report/index.php?fail=0');
   }
 } else {
-  header('Location: /index.php?fail=0');
+  header('Location: /disaster_report/index.php?fail=0');
 }

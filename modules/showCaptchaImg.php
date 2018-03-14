@@ -25,7 +25,7 @@ $fontColor = imagecolorallocate($captcha, 255, 255, 255);
 //影像填滿背景顏色
 imagefill($captcha, 0, 0, $backgroundColor);
 //影像畫上驗證碼
-imagettftext($captcha, 15, 0, rand(0,45), rand(15,30), $fontColor, $_SERVER['DOCUMENT_ROOT'] . "/public/font/arial.ttf", $captchaString);
+imagettftext($captcha, 15, 0, rand(0,45), rand(15,30), $fontColor, $_SERVER['DOCUMENT_ROOT'] . "/disaster_report/public/font/arial.ttf", $captchaString);
 //隨機畫上200個點，做為雜訊用
 for($i = 0; $i < 200; $i++) {
 	imagesetpixel($captcha, rand() % $captchaWidth , rand() % $captchaHeight , $fontColor);

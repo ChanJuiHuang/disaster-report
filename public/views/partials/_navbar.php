@@ -31,7 +31,7 @@
                     <a class="dropdown-item" href="">Categories</a>
                     <a class="dropdown-item" href="">Tags</a>
                     <div class="dropdown-divider"></div>
-                    <form action="/routes/auth/logout.php" method="POST">
+                    <form action="/disaster_report/routes/auth/logout.php" method="POST">
                         <button class="dropdown-item" type="submit" style="curs-or: pointer;">Logout</button>
                     </form>
                 </div>
