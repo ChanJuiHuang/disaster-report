@@ -1,17 +1,17 @@
 <?php
 
+require($_SERVER['DOCUMENT_ROOT'] . '/disaster_report/modules/createUserSession.php');
 require($_SERVER['DOCUMENT_ROOT'] . '/disaster_report/modules/csrfTokenModules.php');
+require($_SERVER['DOCUMENT_ROOT'] . '/disaster_report/modules/isLogin.php');
 
-$lifetime = 7200;
-$path = '/';
-$domain = '; samesite=lax;';
-$secure = false;
-$httpOnly = true;
-session_set_cookie_params($lifetime, $path, $domain, $secure, $httpOnly);
-
+$createUserSession();
 session_start();
 $setCsrfTokenToSession($generateRandStr);
 $setCsrfTokenToCookie($_SESSION['csrfToken']);
+
+if ($isLogin()) {
+    header('Location: /disaster_report/testLogin.php');
+}
 session_write_close();
 
 ?>
