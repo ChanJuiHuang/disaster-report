@@ -12,5 +12,10 @@
 </html>
 
 <?php
+require($_SERVER['DOCUMENT_ROOT'] . '/disaster_report/modules/isLogin.php');
+
 session_start();
 var_dump($_SESSION);
+if (!$isLogin()) {
+  header('Location: /disaster_report/index.php');
+}
