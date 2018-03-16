@@ -64,5 +64,7 @@ session_write_close();
 </body>
 
 <?php include($_SERVER['DOCUMENT_ROOT'] . '/disaster_report/public/views/partials/_script.php'); ?>
+<script src="/disaster_report/public/js/queryString.js"></script>
+<script src="/disaster_report/public/js/reloadCaptchaImg.js"></script>
 
 </html>
