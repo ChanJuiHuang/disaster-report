@@ -1,0 +1,6 @@
+.mainmenu__button {
+    width: 45vmin;
+    height: 45vmin;
+    font-size: 5vmin;
+    cursor: pointer;
+}
