@@ -54,7 +54,7 @@ if (!(empty($_POST['account']) || empty($_POST['password']) || empty($_POST['cap
     // $_SESSION['account'] = $account;
     // $_SESSION['is_login'] = true;
     // $_SESSION['is_center'] = $user['UnitID'] === '01' ? true : false;
-    header('Location: /disaster_report/testLogin.php');
+    header('Location: /disaster_report/public/views/mainMenu.php');
   } catch (Exception $e) {
     header('Location: /disaster_report/index.php?fail=' . $e->getCode());
   }

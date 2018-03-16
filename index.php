@@ -10,7 +10,7 @@ $setCsrfTokenToSession($generateRandStr);
 $setCsrfTokenToCookie($_SESSION['csrfToken']);
 
 if ($isLogin()) {
-    header('Location: /disaster_report/testLogin.php');
+    header('Location: /disaster_report/public/views/mainMenu.php');
 }
 session_write_close();
 
