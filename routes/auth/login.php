@@ -2,7 +2,11 @@
 
 include($_SERVER['DOCUMENT_ROOT'] . '/disaster_report/config/db_config.php');
 
-if (!(empty($_POST['account']) || empty($_POST['password']) || empty($_POST['captcha']))) {
+if (empty($_POST['account']) || empty($_POST['password'])) {
+  header('Location: /disaster_report/index.php?fail=1');
+} elseif (empty($_POST['captcha'])) {
+  header('Location: /disaster_report/index.php?fail=2');
+} else {
   $account = null;
   $password = null;
   $captcha = null;
@@ -33,7 +37,7 @@ if (!(empty($_POST['account']) || empty($_POST['password']) || empty($_POST['cap
     $_SESSION['is_center'] = $user['unitid'] === '01' ? true : false;
 
     // $conn = odbc_connect($odbc_dsn, $odbc_user, $odbc_password);
-    // $userStmt = odbc_prepare($conn, 'SELECT MemName, MemID, UnitID from MemberData WHERE MemID=? AND Pwd=?;');
+    // $userStmt = odbc_prepare($conn, "SELECT MemName, MemID, UnitID from MemberData WHERE MemID=? AND Pwd=? AND PosID!='406';");
     // $result = odbc_execute($userStmt, [$account, $password]);
     // $user = odbc_fetch_array($userStmt);
 
@@ -58,7 +62,5 @@ if (!(empty($_POST['account']) || empty($_POST['password']) || empty($_POST['cap
   } catch (Exception $e) {
     header('Location: /disaster_report/index.php?fail=' . $e->getCode());
   }
-} else {
-  header('Location: /disaster_report/index.php?fail=1');
 }
 session_write_close();
