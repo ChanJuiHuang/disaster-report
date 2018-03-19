@@ -19,12 +19,13 @@
                 <a class="nav-link" href="/contact">Contact</a>
             </li> -->
         <!-- </ul> -->
-        
+        <?php if (!empty($_SESSION['is_login']) && $_SESSION['is_login'] === true) { ?>
         <ul class="navbar-nav">
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
                     aria-expanded="false">
-                    羅旭辰
+                    <?= $_SESSION['name'] ?>
+                    <!-- <?= mb_convert_encoding($_SESSION['name'], 'utf-8', 'big-5'); ?> -->
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="">Posts</a>
@@ -37,5 +38,6 @@
                 </div>
             </li>
         </ul>
+        <?php } ?>
     </div>
 </nav>
