@@ -1,11 +1,10 @@
 <?php
 
-require($_SERVER['DOCUMENT_ROOT'] . '/disaster_report/modules/createUserSession.php');
+require($_SERVER['DOCUMENT_ROOT'] . '/disaster_report/modules/session.php');
 require($_SERVER['DOCUMENT_ROOT'] . '/disaster_report/modules/csrfTokenModules.php');
 require($_SERVER['DOCUMENT_ROOT'] . '/disaster_report/modules/isLogin.php');
 
-$createUserSession();
-session_start();
+$session();
 $setCsrfTokenToSession($generateRandStr);
 $setCsrfTokenToCookie($_SESSION['csrfToken']);
 

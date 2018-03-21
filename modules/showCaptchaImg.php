@@ -1,5 +1,7 @@
 <?php
 
+require($_SERVER['DOCUMENT_ROOT'] . '/disaster_report/modules/session.php');
+
 $captchaString = "";	//驗證碼文字
 $captchaLength = 5;		//驗證碼長度
  
@@ -8,7 +10,7 @@ for($i=0; $i < $captchaLength; $i++){
 	$captchaString = $captchaString . rand(0, 9);
 }
  
-session_start();
+$session();
 $_SESSION['captcha'] = $captchaString;	//驗證碼存入SESSION內
  
 header("Content-Type: image/png");	//宣告輸出為PNG影像

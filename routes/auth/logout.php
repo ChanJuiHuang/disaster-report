@@ -1,6 +1,8 @@
 <?php
 
-session_start();
+require($_SERVER['DOCUMENT_ROOT'] . '/disaster_report/modules/session.php');
+
+$session();
 session_unset();
 session_destroy();
 
