@@ -35,6 +35,7 @@ if (empty($_POST['account']) || empty($_POST['password'])) {
     $_SESSION['account'] = $account;
     $_SESSION['is_login'] = true;
     $_SESSION['is_center'] = $user['unitid'] === '01' ? true : false;
+    $_SESSION['team_NO'] = $user['unitid'];
 
     // $conn = odbc_connect($odbc_dsn, $odbc_user, $odbc_password);
     // $userStmt = odbc_prepare($conn, "SELECT MemName, MemID, UnitID from MemberData WHERE MemID=? AND Pwd=? AND PosID!='406';");
@@ -58,6 +59,7 @@ if (empty($_POST['account']) || empty($_POST['password'])) {
     // $_SESSION['account'] = $account;
     // $_SESSION['is_login'] = true;
     // $_SESSION['is_center'] = $user['UnitID'] === '01' ? true : false;
+    // $_SESSION['team_NO'] = $user['UnitID'];
     header('Location: /disaster_report/public/views/mainMenu.php');
   } catch (Exception $e) {
     header('Location: /disaster_report/index.php?fail=' . $e->getCode());
