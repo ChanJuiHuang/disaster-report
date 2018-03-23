@@ -13,3 +13,14 @@ function session () {
   setCsrfTokenToSession();
   setCsrfTokenToCookie($_SESSION['csrfToken']);
 };
+
+function session_flash ($key, $value) {
+  if (empty($value)) {
+    echo isset($_SESSION[$key]) ? $_SESSION[$key] : '';
+    unset($_SESSION[$key]);
+    $_SESSION['flash'] = false;
+  } else {
+    $_SESSION['flash'] = true;
+    $_SESSION[$key] = $value;
+  }
+}
