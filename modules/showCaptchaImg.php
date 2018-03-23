@@ -10,7 +10,7 @@ for($i=0; $i < $captchaLength; $i++){
 	$captchaString = $captchaString . rand(0, 9);
 }
  
-$session();
+session();
 $_SESSION['captcha'] = $captchaString;	//驗證碼存入SESSION內
  
 header("Content-Type: image/png");	//宣告輸出為PNG影像

@@ -1,6 +1,6 @@
 <?php
 
-$generateRandStr = function ($length) {
+function generateRandStr ($length) {
   $alphanum = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
   $str = '';
   for ($i = 0; $i < $length; $i++) {
@@ -10,17 +10,17 @@ $generateRandStr = function ($length) {
   return $str;
 };
 
-$generateSalt = function ($generateRandStr) {
-    return $salt = '$2a$10$' . $generateRandStr(22) . '$';
+function generateSalt () {
+    return $salt = '$2a$10$' . generateRandStr(22) . '$';
 };
 
-$setCsrfTokenToSession = function ($generateRandStr) {
+function setCsrfTokenToSession () {
   if (empty($_SESSION['csrfToken'])) {
-    $_SESSION['csrfToken'] = $generateRandStr(40);
+    $_SESSION['csrfToken'] = generateRandStr(40);
   }
 };
 
-$setCsrfTokenToCookie = function ($csrfToken) {
+function setCsrfTokenToCookie ($csrfToken) {
   if (empty($_COOKIE['x_csrf_token'])) {
     $expire = time() + 7200;
     $path = '/';

@@ -2,7 +2,7 @@
 
 require($_SERVER['DOCUMENT_ROOT'] . '/disaster_report/modules/session.php');
 
-$session();
+session();
 session_unset();
 session_destroy();
 

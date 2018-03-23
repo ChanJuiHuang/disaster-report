@@ -1,12 +1,9 @@
 <?php
 
 require($_SERVER['DOCUMENT_ROOT'] . '/disaster_report/modules/session.php');
-require($_SERVER['DOCUMENT_ROOT'] . '/disaster_report/modules/csrfTokenModules.php');
 require($_SERVER['DOCUMENT_ROOT'] . '/disaster_report/modules/isLogin.php');
 
-$session();
-$setCsrfTokenToSession($generateRandStr);
-$setCsrfTokenToCookie($_SESSION['csrfToken']);
+session();
 
 if ($isLogin()) {
     header('Location: /disaster_report/public/views/mainMenu.php');
@@ -31,7 +28,7 @@ session_write_close();
                   <form method="POST" action="/disaster_report/routes/auth/login.php">
 
                       <div class="form-group">
-                        <label for="account" class="">臂章號碼：</label>
+                        <label for="account">臂章號碼：</label>
                         <input id="account" type="text" class="form-control" name="account" required>
                       </div>
 

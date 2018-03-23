@@ -1,6 +1,7 @@
 <?php
 
-include($_SERVER['DOCUMENT_ROOT'] . '/disaster_report/config/db_config.php');
+require($_SERVER['DOCUMENT_ROOT'] . '/disaster_report/config/db_config.php');
+require($_SERVER['DOCUMENT_ROOT'] . '/disaster_report/modules/session.php');
 
 if (empty($_POST['account']) || empty($_POST['password'])) {
   header('Location: /disaster_report/index.php?fail=1');
@@ -18,7 +19,7 @@ if (empty($_POST['account']) || empty($_POST['password'])) {
     $userStmt->execute([$account, $password]);
     $user = $userStmt->fetch(PDO::FETCH_ASSOC);
 
-    session_start();
+    session();
     if (!$conn) {
       throw new Exception("Connection Error!", 0);
     }
