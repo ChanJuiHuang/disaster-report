@@ -17,7 +17,7 @@
   <?php include($_SERVER['DOCUMENT_ROOT'] . '/disaster_report/public/views/partials/_navbar.php'); ?>
   <div class="container">
     <div class="d-flex justify-content-center">
-      <a href="/disaster_report/public/views/rainTopic.php">
+      <a href="/disaster_report/routes/topics/index.php?type=rain">
         <button class="mainmenu__button m-1">豪大雨</br>災情查報</button>
       </a>
       <button class="mainmenu__button m-1">烏溪、濁水溪</br>災情查報</button>
