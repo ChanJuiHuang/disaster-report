@@ -28,7 +28,7 @@
                     <!-- <?= mb_convert_encoding($_SESSION['name'], 'utf-8', 'big-5'); ?> -->
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="">Posts</a>
+                    <a class="dropdown-item" href="/disaster_report/public/views/mainMenu.php">主選單</a>
                     <a class="dropdown-item" href="">Categories</a>
                     <a class="dropdown-item" href="">Tags</a>
                     <div class="dropdown-divider"></div>
