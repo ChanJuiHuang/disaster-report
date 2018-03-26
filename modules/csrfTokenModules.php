@@ -17,11 +17,13 @@ function generateSalt () {
 function setCsrfTokenToSession () {
   if (empty($_SESSION['csrfToken'])) {
     $_SESSION['csrfToken'] = generateRandStr(40);
+    return 1;
   }
+  return 0;
 };
 
-function setCsrfTokenToCookie ($csrfToken) {
-  if (empty($_COOKIE['x_csrf_token'])) {
+function setCsrfTokenToCookie ($isset, $csrfToken) {
+  if ($isset) {
     $expire = time() + 7200;
     $path = '/';
     $domain = '; samesite=lax;';

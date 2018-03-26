@@ -10,8 +10,8 @@ function session () {
   $httpOnly = true;
   session_set_cookie_params($lifetime, $path, $domain, $secure, $httpOnly);
   session_start();
-  setCsrfTokenToSession();
-  setCsrfTokenToCookie($_SESSION['csrfToken']);
+  $isset = setCsrfTokenToSession();
+  setCsrfTokenToCookie($isset, $_SESSION['csrfToken']);
 };
 
 function session_flash ($key, $value) {
