@@ -8,7 +8,6 @@ session();
 if ($isLogin()) {
     header('Location: /disaster_report/public/views/mainMenu.php');
 }
-session_write_close();
 
 ?>
 
@@ -25,6 +24,7 @@ session_write_close();
           <div class="card">
               <div class="card-title card-header" style="font-size: 6vmin; text-align: center;">登入</div>
               <div class="card-body">
+                  <?php include($_SERVER['DOCUMENT_ROOT'] . '/disaster_report/public/views/partials/_messages.php'); ?>
                   <form method="POST" action="/disaster_report/routes/auth/login.php">
 
                       <div class="form-group">
@@ -40,7 +40,7 @@ session_write_close();
                       <div class="form-group">
 						<label for="captcha">驗證碼：</label>
 						<p>
-                            <input type="text" name="captcha" id="captcha" class="form-control">
+                            <input type="text" name="captcha" id="captcha" class="form-control" required>
 						    <img src="/disaster_report/modules/showCaptchaImg.php" id="captcha-img">
                             <a href="#" id="reload-captcha" style="font-size: 12px">重新產生</a>
                         </p>
