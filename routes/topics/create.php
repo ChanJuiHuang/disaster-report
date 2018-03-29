@@ -8,6 +8,7 @@ session();
 
 if (!$isLogin()) {
   header('Location: /disaster_report/index.php');
+  return;
 }
 
 if (isset($_SERVER['QUERY_STRING'])) {

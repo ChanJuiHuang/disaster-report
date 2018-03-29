@@ -7,6 +7,7 @@ require($_SERVER['DOCUMENT_ROOT'] . '/disaster_report/config/db_config.php');
 session();
 if (!$isLogin()) {
   header('Location: /disaster_report/index.php');
+  return;
 }
 
 try {
@@ -16,6 +17,7 @@ try {
   $topics = $topicsStmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (Exception $e) {
   header("Location: /disaster_report/routes/auth/logout.php?fail={$e->getCode()}");
+  return;
 }
 ?>
 

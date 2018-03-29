@@ -8,6 +8,7 @@ session();
 
 if ($isLogin()) {
   header('Location: /disaster_report/public/views/mainMenu.php');
+  return;
 }
 
 if (empty($_POST['account']) || empty($_POST['password'])) {

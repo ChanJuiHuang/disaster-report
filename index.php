@@ -6,7 +6,8 @@ require($_SERVER['DOCUMENT_ROOT'] . '/disaster_report/modules/isLogin.php');
 session();
 
 if ($isLogin()) {
-    header('Location: /disaster_report/public/views/mainMenu.php');
+  header('Location: /disaster_report/public/views/mainMenu.php');
+  return;
 }
 
 ?>
