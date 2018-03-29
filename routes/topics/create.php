@@ -56,6 +56,10 @@ try {
                   <div>請選取查報分隊：</div>
                   <?php foreach ($corps as $teams) { ?>
                   <div class="form-group">
+                    <div>
+                      <a href="#" class="checkTeams">全選 | </a>
+                      <a href="#" class="unCheckTeams">反選</a>
+                    </div>
                     <?php foreach ($teams as $team) { ?>
                     <div class="form-check form-check-inline">
                       <input class="form-check-input" type="checkbox" style="zoom: 1.5" id="<?= $team['id'] ?>" name="teams[]" value="<?= $team['id'] ?>">
@@ -83,3 +87,5 @@ try {
 <?php include($_SERVER['DOCUMENT_ROOT'] . '/disaster_report/public/views/partials/_script.php'); ?>
 
 </html>
+
+<script src="/disaster_report/public/js/checkBox.js"></script>
