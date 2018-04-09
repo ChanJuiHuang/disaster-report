@@ -26,6 +26,9 @@ if (empty($_POST['topic'])) {
   extract($_POST, EXTR_IF_EXISTS);
 
   try {
+    if ($_COOKIE['x_csrf_token'] !== $_SESSION['csrfToken']) {
+      throw new Exception(null, 3);
+    }
     $conn = new PDO($dsn, $db_user, $db_password);
     $conn->beginTransaction();
     $topicsStmt = $conn->prepare('INSERT INTO topics(name, type) VALUES (?, ?)');
