@@ -10,10 +10,14 @@ if (!$isLogin()) {
   return;
 }
 
+if (isset($_SERVER['QUERY_STRING'])) {
+  parse_str($_SERVER['QUERY_STRING'], $queryString);
+}
+
 try {
   $conn = new PDO($dsn, $db_user, $db_password);
-  $topicsStmt = $conn->prepare('SELECT name, created_at FROM topics ORDER BY created_at;');
-  $topicsStmt->execute();
+  $topicsStmt = $conn->prepare('SELECT name, created_at FROM topics WHERE type = ? ORDER BY created_at;');
+  $topicsStmt->execute([$queryString['type']]);
   $topics = $topicsStmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (Exception $e) {
   header("Location: /disaster_report/routes/auth/logout.php?fail={$e->getCode()}");
