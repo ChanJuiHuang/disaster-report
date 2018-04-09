@@ -36,7 +36,7 @@ if (empty($_POST['topic'])) {
     for ($i=0; $i < count($teams); $i++) { 
       $placeholders[] = "(?, {$topic_id})";
     }
-    $teamsStmt = $conn->prepare("INSERT INTO working_teams(team_id, topic_id) VALUES " . join(',', $placeholders));
+    $teamsStmt = $conn->prepare("INSERT INTO teams_info(team_id, topic_id) VALUES " . join(',', $placeholders));
     $teamsStmt->execute($teams);
     $conn->commit();
 
