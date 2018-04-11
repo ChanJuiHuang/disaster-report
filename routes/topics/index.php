@@ -16,7 +16,7 @@ if (isset($_SERVER['QUERY_STRING'])) {
 
 try {
   $conn = new PDO($dsn, $db_user, $db_password);
-  $topicsStmt = $conn->prepare('SELECT name, created_at FROM topics WHERE type = ? ORDER BY created_at;');
+  $topicsStmt = $conn->prepare('SELECT id, name, created_at FROM topics WHERE type = ? ORDER BY created_at;');
   $topicsStmt->execute([$queryString['type']]);
   $topics = $topicsStmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (Exception $e) {
@@ -59,7 +59,11 @@ try {
                   <tbody>
                     <?php foreach ($topics as $topic) { ?>
                     <tr>
-                      <th scope="row"><?= $topic['name'] ?></th>
+                      <th scope="row">
+                        <a href="/disaster_report/routes/topics/show.php?topic_id=<?= $topic['id'] ?>">
+                          <?= $topic['name'] ?>
+                        </a>
+                      </th>
                       <td><?= date('Y-m-d H:i:s', strtotime($topic['created_at'])) ?></td>
                     </tr>
                     <?php } ?>
