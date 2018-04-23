@@ -50,7 +50,7 @@ try {
                 <a href="/disaster_report/routes/topics/teams/edit.php?topic_id=<?= $queryString['topic_id'] ?>">
                   <button type="button" class="btn btn-success">編輯出勤分隊</button>
                 </a>
-                <a href="">
+                <a href="/disaster_report/routes/topics/deletePage.php?topic_id=<?= $queryString['topic_id'] ?>">
                   <button type="button" class="btn btn-danger">刪除主題</button>
                 </a>
                 <?php } ?>
