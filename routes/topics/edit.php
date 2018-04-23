@@ -66,5 +66,3 @@ try {
 <?php include($_SERVER['DOCUMENT_ROOT'] . '/disaster_report/public/views/partials/_script.php'); ?>
 
 </html>
-
-<script src="/disaster_report/public/js/checkBox.js"></script>
