@@ -16,7 +16,12 @@ if (isset($_SERVER['QUERY_STRING'])) {
 
 try {
   $conn = new PDO($dsn, $db_user, $db_password);
-  $topicsStmt = $conn->prepare('SELECT id, name, created_at FROM topics WHERE type = ? ORDER BY created_at;');
+  if ($_SESSION['team_NO'] === '01') {
+    $query = "SELECT id, name, created_at FROM topics WHERE type = ? ORDER BY created_at;";
+  } else {
+    $query = "SELECT topics.id, topics.name, topics.created_at FROM topics JOIN teams_info ON topics.id = teams_info.topic_id WHERE topics.type = ? AND teams_info.team_id = '{$_SESSION['team_NO']}' ORDER BY topics.created_at;";
+  }
+  $topicsStmt = $conn->prepare($query);
   $topicsStmt->execute([$queryString['type']]);
   $topics = $topicsStmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (Exception $e) {
@@ -60,6 +65,7 @@ try {
                     <?php foreach ($topics as $topic) { ?>
                     <tr>
                       <th scope="row">
+                        <!-- 中心和分隊要使用不同的連結 -->
                         <a href="/disaster_report/routes/topics/show.php?topic_id=<?= $topic['id'] ?>">
                           <?= $topic['name'] ?>
                         </a>
