@@ -50,6 +50,9 @@ try {
                   <button type="button" class="btn btn-secondary">新增主題</button>
                 </a>
                 <?php } ?>
+                <a href="/disaster_report/routes/places/edit.php?type=<?= $queryString['type'] ?>">
+                  <button type="button" class="btn btn-success">編輯查報地點</button>
+                </a>
               </div>
             </div>
             <div class="row">
