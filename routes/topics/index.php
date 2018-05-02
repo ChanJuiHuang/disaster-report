@@ -68,10 +68,15 @@ try {
                     <?php foreach ($topics as $topic) { ?>
                     <tr>
                       <th scope="row">
-                        <!-- 中心和分隊要使用不同的連結 -->
-                        <a href="/disaster_report/routes/topics/show.php?topic_id=<?= $topic['id'] ?>">
-                          <?= $topic['name'] ?>
-                        </a>
+                        <?php if ($_SESSION['is_center']) { ?>
+                          <a href="/disaster_report/routes/topics/teams/show.php?topic_id=<?= $topic['id'] ?>">
+                            <?= $topic['name'] ?>
+                          </a>
+                        <?php } else {?>
+                          <a href="/disaster_report/routes/reports/index.php?topic_id=<?= $topic['id'] ?>&team_id=<?= $_SESSION['team_NO'] ?>">
+                            <?= $topic['name'] ?>
+                          </a>
+                        <?php } ?>
                       </th>
                       <td><?= date('Y-m-d H:i:s', strtotime($topic['created_at'])) ?></td>
                     </tr>
