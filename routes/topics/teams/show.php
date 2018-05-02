@@ -19,7 +19,7 @@ try {
   $topicStmt = $conn->prepare("SELECT name FROM topics WHERE id = {$queryString['topic_id']}");
   $topicStmt->execute();
   $topic = $topicStmt->fetch(PDO::FETCH_ASSOC);
-  $teamsStmt = $conn->prepare("SELECT teams.name FROM teams_info JOIN teams ON teams_info.team_id = teams.id WHERE teams_info.topic_id = {$queryString['topic_id']}");
+  $teamsStmt = $conn->prepare("SELECT teams.id, teams.name FROM teams_info JOIN teams ON teams_info.team_id = teams.id WHERE teams_info.topic_id = {$queryString['topic_id']}");
   $teamsStmt->execute();
   $teams = $teamsStmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (Exception $e) {
@@ -68,7 +68,7 @@ try {
                     <?php foreach ($teams as $team) { ?>
                     <tr>
                       <th scope="row">
-                        <a href="">
+                        <a href="/disaster_report/routes/reports/index.php?topic_id=<?= $queryString['topic_id'] ?>&team_id=<?= $team['id'] ?>">
                           <?= $team['name'] ?>
                         </a>
                       </th>
