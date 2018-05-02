@@ -40,7 +40,7 @@ if (empty($_POST['teams'])) {
     $teamsInfoStmt->execute($teams);
     $conn->commit();
 
-    header("Location: /disaster_report/routes/topics/show.php?topic_id={$queryString['topic_id']}");
+    header("Location: /disaster_report/routes/topics/teams/show.php?topic_id={$queryString['topic_id']}");
   } catch (Exception $e) {
     header("Location: /disaster_report/routes/topics/create.php?type={$_POST['type']}&fail={$e->getCode()}");
     session_flash('error', '伺服器連線錯誤，請登出並重新整理頁面，再次登入！');
