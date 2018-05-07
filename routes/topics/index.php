@@ -50,9 +50,11 @@ try {
                   <button type="button" class="btn btn-secondary">新增主題</button>
                 </a>
                 <?php } ?>
+                <?php if (!$_SESSION['is_center']) { ?>
                 <a href="/disaster_report/routes/places/edit.php?type=<?= $queryString['type'] ?>">
                   <button type="button" class="btn btn-success">編輯查報地點</button>
                 </a>
+                <?php } ?>
               </div>
             </div>
             <div class="row">
