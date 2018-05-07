@@ -19,7 +19,7 @@ try {
   if ($_SESSION['team_NO'] === '01') {
     $query = "SELECT id, name, created_at FROM topics WHERE type = ? ORDER BY created_at;";
   } else {
-    $query = "SELECT topics.id, topics.name, topics.created_at FROM topics JOIN teams_info ON topics.id = teams_info.topic_id WHERE topics.type = ? AND teams_info.team_id = '{$_SESSION['team_NO']}' ORDER BY topics.created_at;";
+    $query = "SELECT topics.id, topics.name, topics.created_at FROM topics JOIN active_team_informations ON topics.id = active_team_informations.topic_id WHERE topics.type = ? AND active_team_informations.team_id = '{$_SESSION['team_NO']}' ORDER BY topics.created_at;";
   }
   $topicsStmt = $conn->prepare($query);
   $topicsStmt->execute([$queryString['type']]);

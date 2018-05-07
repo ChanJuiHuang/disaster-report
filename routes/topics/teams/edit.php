@@ -23,7 +23,7 @@ try {
   $teams = $teamsStmt->fetchAll(PDO::FETCH_ASSOC);
   $corps = [array_slice($teams, 0, 8), array_slice($teams, 8, 9), array_slice($teams, 17, 8), array_slice($teams, 25, 10), array_slice($teams, 35, 1)];
 
-  $teamsInfoStmt = $conn->prepare("SELECT team_id FROM teams_info WHERE topic_id = {$queryString['topic_id']};");
+  $teamsInfoStmt = $conn->prepare("SELECT team_id FROM active_team_informations WHERE topic_id = {$queryString['topic_id']};");
   $teamsInfoStmt->execute();
   $teamsInfo = $teamsInfoStmt->fetchAll(PDO::FETCH_ASSOC);
   $conn->commit();

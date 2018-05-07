@@ -29,14 +29,14 @@ if (empty($_POST['teams'])) {
     $conn = new PDO($dsn, $db_user, $db_password);
     $conn->beginTransaction();
     $topic_id = $queryString['topic_id'];
-    $teamsStmt = $conn->prepare("DELETE FROM teams_info WHERE topic_id = {$topic_id}");
+    $teamsStmt = $conn->prepare("DELETE FROM active_team_informations WHERE topic_id = {$topic_id}");
     $teamsStmt->execute();
 
     $placeholders = [];
     for ($i=0; $i < count($teams); $i++) { 
       $placeholders[] = "(?, {$topic_id})";
     }
-    $teamsInfoStmt = $conn->prepare("INSERT INTO teams_info(team_id, topic_id) VALUES " . join(',', $placeholders));
+    $teamsInfoStmt = $conn->prepare("INSERT INTO active_team_informations(team_id, topic_id) VALUES " . join(',', $placeholders));
     $teamsInfoStmt->execute($teams);
     $conn->commit();
 
