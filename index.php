@@ -2,6 +2,7 @@
 
 require($_SERVER['DOCUMENT_ROOT'] . '/disaster_report/modules/session.php');
 require($_SERVER['DOCUMENT_ROOT'] . '/disaster_report/modules/isLogin.php');
+require($_SERVER['DOCUMENT_ROOT'] . '/disaster_report/modules/csrfTokenModules.php');
 
 session();
 
@@ -9,6 +10,8 @@ if ($isLogin()) {
   header('Location: /disaster_report/public/views/mainMenu.php');
   return;
 }
+
+setCsrfTokenToSession();
 
 ?>
 
@@ -27,7 +30,7 @@ if ($isLogin()) {
               <div class="card-body">
                   <?php include($_SERVER['DOCUMENT_ROOT'] . '/disaster_report/public/views/partials/_messages.php'); ?>
                   <form method="POST" action="/disaster_report/routes/auth/login.php">
-
+                      <input type="hidden" class="form-control" name="csrfToken" value="<?= $_SESSION['csrfToken'] ?>">
                       <div class="form-group">
                         <label for="account">臂章號碼：</label>
                         <input id="account" type="text" class="form-control" name="account" required>

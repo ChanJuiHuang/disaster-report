@@ -35,7 +35,7 @@ if (empty($_POST['account']) || empty($_POST['password'])) {
     if ($captcha !== $_SESSION['captcha']) {
       throw new Exception("您的驗證碼輸入錯誤！", 2);
     }
-    if ($_COOKIE['x_csrf_token'] !== $_SESSION['csrfToken']) {
+    if ($_POST['csrfToken'] !== $_SESSION['csrfToken']) {
       throw new Exception(null, 3);
     }
     $_SESSION['name'] = $user['memname'];
@@ -59,8 +59,8 @@ if (empty($_POST['account']) || empty($_POST['password'])) {
     // if ($captcha !== $_SESSION['captcha']) {
     //   throw new Exception("Captcha is wrong!", 2);
     // }
-    // if ($_COOKIE['x_csrf_token'] !== $_SESSION['csrfToken']) {
-    //   throw new Exception("CSRF Token is wrong!", 3);
+    // if ($_POST['csrfToken'] !== $_SESSION['csrfToken']) {
+    //   throw new Exception(null, 3);
     // }
     // $_SESSION['name'] = $user['MemName'];
     // $_SESSION['account'] = $account;

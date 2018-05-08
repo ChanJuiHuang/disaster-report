@@ -23,7 +23,7 @@ if (empty($_POST['teams'])) {
   extract($_POST, EXTR_IF_EXISTS);
 
   try {
-    if ($_COOKIE['x_csrf_token'] !== $_SESSION['csrfToken']) {
+    if ($_POST['csrfToken'] !== $_SESSION['csrfToken']) {
       throw new Exception(null, 3);
     }
     $conn = new PDO($dsn, $db_user, $db_password);
@@ -42,7 +42,7 @@ if (empty($_POST['teams'])) {
 
     header("Location: /disaster_report/routes/topics/teams/show.php?topic_id={$queryString['topic_id']}");
   } catch (Exception $e) {
-    header("Location: /disaster_report/routes/topics/create.php?type={$_POST['type']}&fail={$e->getCode()}");
+    header("Location: /disaster_report/routes/topics/teams/edit.php?topic_id={$queryString['topic_id']}");
     session_flash('error', '伺服器連線錯誤，請登出並重新整理頁面，再次登入！');
   }
 }

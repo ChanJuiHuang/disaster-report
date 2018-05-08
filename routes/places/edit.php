@@ -3,6 +3,7 @@
 require($_SERVER['DOCUMENT_ROOT'] . '/disaster_report/modules/session.php');
 require($_SERVER['DOCUMENT_ROOT'] . '/disaster_report/modules/isLogin.php');
 require($_SERVER['DOCUMENT_ROOT'] . '/disaster_report/config/db_config.php');
+require($_SERVER['DOCUMENT_ROOT'] . '/disaster_report/modules/csrfTokenModules.php');
 
 session();
 
@@ -10,6 +11,8 @@ if (!$isLogin()) {
   header('Location: /disaster_report/index.php');
   return;
 }
+
+setCsrfTokenToSession();
 
 if (isset($_SERVER['QUERY_STRING'])) {
   parse_str($_SERVER['QUERY_STRING'], $queryString);
@@ -43,6 +46,7 @@ try {
               <div class="col-md-8 offset-md-2">
                 <?php include($_SERVER['DOCUMENT_ROOT'] . '/disaster_report/public/views/partials/_messages.php'); ?>
                 <form method="POST" action="/disaster_report/routes/places/update.php?type=<?= $queryString['type'] ?>">
+                  <input type="hidden" class="form-control" name="csrfToken" value="<?= $_SESSION['csrfToken'] ?>">
                   <div class="form-group">
                     <label>地點:</label>
                     <div class="form-group">

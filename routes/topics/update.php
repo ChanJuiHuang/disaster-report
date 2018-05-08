@@ -23,13 +23,13 @@ if (empty($_POST['topic'])) {
   extract($_POST, EXTR_IF_EXISTS);
 
   try {
-    if ($_COOKIE['x_csrf_token'] !== $_SESSION['csrfToken']) {
+    if ($_POST['csrfToken'] !== $_SESSION['csrfToken']) {
       throw new Exception(null, 3);
     }
     $conn = new PDO($dsn, $db_user, $db_password);
     $topicStmt = $conn->prepare("UPDATE topics SET name = '{$topic}' WHERE id = {$queryString['topic_id']}");
     $topicStmt->execute();
-    header("Location: /disaster_report/routes/topics/show.php?topic_id={$queryString['topic_id']}");
+    header("Location: /disaster_report/routes/topics/teams/show.php?topic_id={$queryString['topic_id']}");
   } catch (Exception $e) {
     header("Location: /disaster_report/routes/auth/logout.php?fail={$e->getCode()}");
   }

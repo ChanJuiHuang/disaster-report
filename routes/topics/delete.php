@@ -15,7 +15,7 @@ if (isset($_SERVER['QUERY_STRING'])) {
 }
 
 try {
-  if ($_COOKIE['x_csrf_token'] !== $_SESSION['csrfToken']) {
+  if ($_POST['csrfToken'] !== $_SESSION['csrfToken']) {
     throw new Exception(null, 3);
   }
   $conn = new PDO($dsn, $db_user, $db_password);
