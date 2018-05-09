@@ -45,15 +45,15 @@ if (isset($_SERVER['QUERY_STRING'])) {
           <div class="card-body">
             <div class="row mb-3">
               <div class="col-md-10 offset-md-1">
-                <a href="/disaster_report/routes/">
+                <a href="/disaster_report/routes/reports/active_team_informations/edit.php?topic_id=<?= $queryString['topic_id'] ?>&team_id=<?= $queryString['team_id'] ?>">
                   <button type="button" class="btn btn-primary">編輯出勤資訊</button>
                 </a>
                 <a href="/disaster_report/routes/reports/disaster_status/create.php?topic_id=<?= $queryString['topic_id'] ?>&team_id=<?= $queryString['team_id'] ?>">
                   <button type="button" class="btn btn-secondary">建立災情狀況</button>
                 </a>
-                <a href="/disaster_report/routes/">
+                <!-- <a href="/disaster_report/routes/">
                   <button type="button" class="btn btn-success">編輯災情資訊</button>
-                </a>
+                </a> -->
               </div>
             </div>
             <div class="row">
