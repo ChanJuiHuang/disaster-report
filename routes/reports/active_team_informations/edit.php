@@ -155,4 +155,23 @@ function transformTime($time)
     $('form .car:nth-last-child(6)').remove()
     event.preventDefault()
   })
+
+  $('.sending_time').click(function () {
+    $('#sending_time').val(getDate())
+  })
+
+  $('.return_time').click(function () {
+    $('#return_time').val(getDate())
+  })
+
+  function getDate() {
+    let date = new Date()
+    let y = date.getFullYear()
+    let m = date.getMonth()+1
+    let d = date.getDate()
+    let h = date.getHours()
+    let min = date.getMinutes()
+    let s = date.getSeconds()
+    return `${y}-${m}-${d} ${h}:${min}:${s}`
+  }
 </script>
