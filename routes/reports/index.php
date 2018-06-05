@@ -51,9 +51,9 @@ if (isset($_SERVER['QUERY_STRING'])) {
                 <a href="/disaster_report/routes/reports/disaster_status/edit.php?topic_id=<?= $queryString['topic_id'] ?>&team_id=<?= $queryString['team_id'] ?>">
                   <button type="button" class="btn btn-secondary">編輯災情狀況</button>
                 </a>
-                <!-- <a href="/disaster_report/routes/">
-                  <button type="button" class="btn btn-success">編輯災情資訊</button>
-                </a> -->
+                <a href="/disaster_report/routes/print/form.php?topic_id=<?= $queryString['topic_id'] ?>&team_id=<?= $queryString['team_id'] ?>">
+                  <button type="button" class="btn btn-success">列印</button>
+                </a>
               </div>
             </div>
             <div class="row">
