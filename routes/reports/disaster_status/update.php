@@ -65,9 +65,9 @@ try {
   }
 
   // 新增地點災情
+  $happenedDisasterIndex = [];
   if (!empty($disasters)) {
     $placeholders = [];
-    $happenedDisasterIndex = [];
     foreach ($disasters as $index => $place_disasters) {
       foreach ($place_disasters as $place_disaster) {
         $isOther = 0;
@@ -87,7 +87,7 @@ try {
   }
 
   // 新增災情概述
-  if (!empty($cities)) {
+  if (!empty($happenedDisasterIndex)) {
     $placeholders = [];
     foreach ($happenedDisasterIndex as $index) {
       $city = addQuote($cities[$index]);
