@@ -113,13 +113,19 @@ function transformTime($time)
                     <?php } ?> -->
                   </div>
                   <div class="form-group">
-                    <label for="sending_time" class="sending_time">出勤時間:</label>
+                    <label for="sending_time" class="sending_time">
+                      出勤時間:
+                      <img src="/disaster_report/public/clock.png" alt="clock" width="20px">
+                    </label>
                     <div class="form-group">
                       <input id="sending_time" type="text" class="form-control" name="sending_time" value="<?= transformTime($active_team_informations['sending_time']) ?>">
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="return_time" class="return_time">返隊時間:</label>
+                    <label for="return_time" class="return_time">
+                      返隊時間:
+                      <img src="/disaster_report/public/clock.png" alt="clock" width="20px">
+                    </label>
                     <div class="form-group">
                       <input id="return_time" type="text" class="form-control" name="return_time" value="<?= transformTime($active_team_informations['return_time']) ?>">
                     </div>
