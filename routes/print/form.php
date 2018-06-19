@@ -35,7 +35,7 @@ try {
   $activeTeamInfo = $activeTeamInfoStmt->fetch(PDO::FETCH_ASSOC);
 
   // 取得place_status data
-  $placeStatusStmt = $conn->prepare("SELECT id, name, is_happened_disaster, is_effect_traffic, return_time FROM place_status WHERE topic_id={$queryString['topic_id']} AND team_id = '{$queryString['team_id']}'");
+  $placeStatusStmt = $conn->prepare("SELECT id, name, is_happened_disaster, is_effect_traffic, return_time FROM place_status WHERE topic_id={$queryString['topic_id']} AND team_id = '{$queryString['team_id']}' ORDER BY id");
   $placeStatusStmt->execute();
   $placeStatus = $placeStatusStmt->fetchAll(PDO::FETCH_ASSOC);
   $placeIds = [];
@@ -44,18 +44,18 @@ try {
   }
 
   // 取得place_disasters data
-  // $placeStatusIds = [];
-  // foreach ($placeStatus as $ps) {
-  //   $placeStatusIds[] = $ps['id'];
-  // }
-  // $placeDisastersStmt = $conn->prepare("SELECT name, isother, other_disaster_name, place_status_id FROM place_disasters WHERE place_status_id IN (" . join(',', $placeStatusIds) . ") ORDER BY place_status_id");
-  // $placeDisastersStmt->execute();
-  // $placeDisasters = $placeDisastersStmt->fetchAll(PDO::FETCH_ASSOC);
+  $placeStatusIds = [];
+  foreach ($placeStatus as $place) {
+    $placeStatusIds[] = $place['id'];
+  }
+  $placeDisastersStmt = $conn->prepare("SELECT name, isother, other_disaster_name, place_status_id FROM place_disasters WHERE place_status_id IN (" . join(',', $placeStatusIds) . ") ORDER BY place_status_id");
+  $placeDisastersStmt->execute();
+  $placeDisasters = $placeDisastersStmt->fetchAll(PDO::FETCH_ASSOC);
 
   // 取得disaster_status data
-  // $disasterStatusStmt = $conn->prepare("SELECT city, address, description, hurt_people, dead_people, trapped_people, place_status_id FROM disaster_status WHERE place_status_id IN (" . join(',', $placeStatusIds) . ") ORDER BY place_status_id");
-  // $disasterStatusStmt->execute();
-  // $disasterStatus = $disasterStatusStmt->fetchAll(PDO::FETCH_ASSOC);
+  $disasterStatusStmt = $conn->prepare("SELECT city, address, description, hurt_people, dead_people, trapped_people, place_status_id FROM disaster_status WHERE place_status_id IN (" . join(',', $placeStatusIds) . ") ORDER BY place_status_id");
+  $disasterStatusStmt->execute();
+  $disasterStatus = $disasterStatusStmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (Exception $e) {
   header("Location: /disaster_report/routes/auth/logout.php?fail={$e->getCode()}");
 }
@@ -99,10 +99,28 @@ function getTeamName($team)
   return $team['name'] . '分隊';
 }
 
+function selectDisaster($disaster, $placeStatusId, $placeDisasters)
+{
+  foreach ($placeDisasters as $placeDisaster) {
+    if ($placeStatusId === $placeDisaster['place_status_id'] && $disaster === $placeDisaster['name']) {
+      return '■';
+    }
+  }
+  return '□';
+}
+
+function showOtherDisasterName($disaster, $placeStatusId, $placeDisasters)
+{
+  foreach ($placeDisasters as $placeDisaster) {
+    if ($placeStatusId === $placeDisaster['place_status_id'] && $disaster === $placeDisaster['name']) {
+      return $placeDisaster['other_disaster_name'];
+    }
+  }
+  return '___________';
+}
 ?>
 
 <html>
-
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title>Disaster Report</title>
@@ -198,10 +216,14 @@ function getTeamName($team)
         <td style="width:305.3pt; border:none"></td>
       </tr>
     </table>
+    <p style="line-height:23pt; margin:0pt; orphans:0; widows:0">
+      <span style="font-family:標楷體; font-size:15pt">&#xa0;</span>
+    </p>
   </div>
 
   <p style="page-break-after:always"></p>
 
+  <?php foreach ($disasterStatus as $disaster) { ?>
   <div style="margin-left: 35px">
     <p style="line-height:23pt; margin:0pt; orphans:0; widows:0">
       <span style="background-color:#d8d8d8; font-family:標楷體; font-size:22pt; font-weight:bold">表二</span>
@@ -211,12 +233,12 @@ function getTeamName($team)
       <tr>
         <td style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:6pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:6pt; padding-left:2.4pt; padding-right:5.03pt; vertical-align:top; width:198.6pt">
           <p style="line-height:23pt; margin:0pt; orphans:0; text-align:center; widows:0">
-            <span style="font-family:標楷體; font-size:15pt">編號___地點狀況</span>
+            <span style="font-family:標楷體; font-size:15pt">編號 <?= $placeIds[$disaster['place_status_id']] ?> 地點狀況</span>
           </p>
         </td>
         <td style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:6pt; border-top-color:#000000; border-top-style:solid; border-top-width:6pt; padding-left:5.03pt; padding-right:2.4pt; vertical-align:top; width:264.5pt">
           <p style="line-height:23pt; margin:0pt; orphans:0; text-align:center; widows:0">
-            <span style="font-family:標楷體; font-size:14pt">_________(鄉/鎮/市)</span>
+            <span style="font-family:標楷體; font-size:14pt"><?= $disaster['city'] ?></span>
             <span style="font-family:標楷體; font-size:14pt">災情描述內容</span>
           </p>
         </td>
@@ -224,83 +246,72 @@ function getTeamName($team)
       <tr>
         <td style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:6pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:2.4pt; padding-right:5.03pt; vertical-align:top; width:198.6pt">
           <p style="margin:0pt; orphans:0; widows:0">
-            <span style="font-family:標楷體; font-size:14pt">□路樹災情□廣告招牌災情</span>
+            <span style="font-family:標楷體; font-size:14pt"><?= selectDisaster("路樹災情", $disaster['place_status_id'], $placeDisasters) ?>路樹災情</span>
+            <span style="font-family:標楷體; font-size:14pt"><?= selectDisaster("廣告招牌災情", $disaster['place_status_id'], $placeDisasters) ?>廣告招牌災情</span>
           </p>
           <p style="margin:0pt; orphans:0; widows:0">
-            <span style="font-family:標楷體; font-size:14pt">□道路、隧道災情□橋梁災情</span>
+            <span style="font-family:標楷體; font-size:14pt"><?= selectDisaster("道路、隧道災情", $disaster['place_status_id'], $placeDisasters) ?>道路、隧道災情</span>
+            <span style="font-family:標楷體; font-size:14pt"><?= selectDisaster("橋梁災情", $disaster['place_status_id'], $placeDisasters) ?>橋梁災情</span>
           </p>
           <p style="margin:0pt; orphans:0; widows:0">
-            <span style="font-family:標楷體; font-size:14pt">□鐵路、高鐵災情□積淹水災情</span>
+            <span style="font-family:標楷體; font-size:14pt"><?= selectDisaster("鐵路、高鐵災情", $disaster['place_status_id'], $placeDisasters) ?>鐵路、高鐵災情</span>
+            <span style="font-family:標楷體; font-size:14pt"><?= selectDisaster("積淹水災情", $disaster['place_status_id'], $placeDisasters) ?>積淹水災情</span>
           </p>
           <p style="margin:0pt; orphans:0; widows:0">
-            <span style="font-family:標楷體; font-size:14pt">□土石災情□建物毀損</span>
-            <span style="font-family:標楷體; font-size:14pt"> </span>
+            <span style="font-family:標楷體; font-size:14pt"><?= selectDisaster("土石災情", $disaster['place_status_id'], $placeDisasters) ?>土石災情</span>
+            <span style="font-family:標楷體; font-size:14pt"><?= selectDisaster("建物毀損", $disaster['place_status_id'], $placeDisasters) ?>建物毀損</span>
           </p>
           <p style="margin:0pt; orphans:0; widows:0">
-            <span style="font-family:標楷體; font-size:14pt">□水利設施災害</span>
+            <span style="font-family:標楷體; font-size:14pt"><?= selectDisaster("水利設施災害", $disaster['place_status_id'], $placeDisasters) ?>水利設施災害</span>
           </p>
           <p style="margin:0pt; orphans:0; widows:0">
-            <span style="font-family:標楷體; font-size:14pt">□民生、基礎設施災情</span>
+            <span style="font-family:標楷體; font-size:14pt"><?= selectDisaster("民生、基礎設施災情", $disaster['place_status_id'], $placeDisasters) ?>民生、基礎設施災情</span>
           </p>
           <p style="margin:0pt; orphans:0; widows:0">
-            <span style="font-family:標楷體; font-size:14pt">□車輛及交通事故災情□火災</span>
+            <span style="font-family:標楷體; font-size:14pt"><?= selectDisaster("車輛及交通事故災情", $disaster['place_status_id'], $placeDisasters) ?>車輛及交通事故災情</span>
+            <span style="font-family:標楷體; font-size:14pt"><?= selectDisaster("火災", $disaster['place_status_id'], $placeDisasters) ?>火災</span>
           </p>
           <p style="line-height:23pt; margin:0pt; orphans:0; widows:0">
-            <span style="font-family:標楷體; font-size:14pt">□其他災害情形</span>
-            <span style="font-family:標楷體; font-size:14pt">：</span>
-            <span style="font-family:標楷體; font-size:14pt">____________</span>
-          </p>
-          <p style="line-height:23pt; margin:0pt; orphans:0; widows:0">
-            <span style="font-family:標楷體; font-size:15pt">__________________________</span>
+            <span style="font-family:標楷體; font-size:14pt"><?= selectDisaster("other", $disaster['place_status_id'], $placeDisasters) ?>其他災害情形：</span>
+            <!-- <span style="font-family:標楷體; font-size:14pt">：</span> -->
+            <span style="font-family:標楷體; font-size:14pt"><?= showOtherDisasterName("other", $disaster['place_status_id'], $placeDisasters) ?></span>
           </p>
         </td>
         <td style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:6pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:2.4pt; vertical-align:top; width:264.5pt">
           <p style="line-height:23pt; margin:0pt; orphans:0; widows:0">
-            <span style="font-family:標楷體; font-size:15pt">一、地點</span>
-            <span style="font-family:標楷體; font-size:15pt">：</span>
-            <span style="font-family:標楷體; font-size:15pt">___________________________</span>
-          </p>
-          <p style="line-height:23pt; margin:0pt; orphans:0; widows:0">
-            <span style="font-family:標楷體; font-size:15pt">___________________________________</span>
-          </p>
-          <p style="line-height:23pt; margin:0pt; orphans:0; widows:0">
-            <span style="font-family:標楷體; font-size:15pt">二、災情概述</span>
-            <span style="font-family:標楷體; font-size:15pt">(</span>
-            <span style="font-family:標楷體; font-size:14pt">人、事、時、地、物簡單明確敘述清楚</span>
-            <span style="font-family:標楷體; font-size:15pt">)</span>
-            <span style="font-family:標楷體; font-size:15pt">：</span>
+            <span style="font-family:標楷體; font-size:15pt">一、地點：</span>
+            <span style="font-family:標楷體; font-size:15pt"><?= $disaster['address'] ?></span>
           </p>
           <p style="line-height:23pt; margin:0pt; orphans:0; widows:0">
             <span style="font-family:標楷體; font-size:15pt">&#xa0;</span>
           </p>
           <p style="line-height:23pt; margin:0pt; orphans:0; widows:0">
-            <span style="font-family:標楷體; font-size:15pt">&#xa0;</span>
+            <span style="font-family:標楷體; font-size:15pt">二、災情概述(人、事、時、地、物簡單明確敘述清楚)：</span>
+            <span style="font-family:標楷體; font-size:15pt"><?= $disaster['description'] ?></span>
           </p>
           <p style="line-height:23pt; margin:0pt; orphans:0; widows:0">
             <span style="font-family:標楷體; font-size:15pt">&#xa0;</span>
           </p>
           <p style="line-height:23pt; margin:0pt; orphans:0; widows:0">
-            <span style="font-family:標楷體; font-size:15pt">&#xa0;</span>
-          </p>
-          <p style="line-height:23pt; margin:0pt; orphans:0; widows:0">
-            <span style="font-family:標楷體; font-size:15pt">&#xa0;</span>
-          </p>
-          <p style="line-height:23pt; margin:0pt; orphans:0; widows:0">
-            <span style="font-family:標楷體; font-size:15pt">&#xa0;</span>
-          </p>
-          <p style="line-height:23pt; margin:0pt; orphans:0; widows:0">
-            <span style="font-family:標楷體; font-size:15pt">&#xa0;</span>
-          </p>
-          <p style="line-height:23pt; margin:0pt; orphans:0; widows:0">
-            <span style="font-family:標楷體; font-size:14pt">三、現場造成___人受傷</span>
+            <?php if (isset($disaster['hurt_people'])) { ?>
+              <span style="font-family:標楷體; font-size:14pt">三、現場造成 <?= $disaster['hurt_people'] ?> 人受傷</span>
+            <?php } else { ?>
+              <span style="font-family:標楷體; font-size:14pt">三、現場造成&#xa0;&#xa0;&#xa0;&#xa0;人受傷</span>
+            <?php } ?>
           </p>
           <p style="line-height:23pt; margin:0pt 0pt 0pt 84.6pt; orphans:0; widows:0">
-            <span style="font-family:標楷體; font-size:14pt">___人</span>
-            <span style="font-family:標楷體; font-size:14pt">死亡</span>
+            <?php if (isset($disaster['dead_people'])) { ?>
+              <span style="font-family:標楷體; font-size:14pt">&#xa0;<?= $disaster['dead_people'] ?> 人死亡</span>
+            <?php } else { ?>
+              <span style="font-family:標楷體; font-size:14pt">&#xa0;&#xa0;&#xa0;&#xa0;人死亡</span>
+            <?php } ?>
           </p>
           <p style="line-height:23pt; margin:0pt 0pt 0pt 84.6pt; orphans:0; widows:0">
-            <span style="font-family:標楷體; font-size:14pt">___人</span>
-            <span style="font-family:標楷體; font-size:14pt">受困</span>
+            <?php if (isset($disaster['trapped_people'])) { ?>
+              <span style="font-family:標楷體; font-size:14pt">&#xa0;<?= $disaster['trapped_people'] ?> 人受困</span>
+            <?php } else { ?>
+              <span style="font-family:標楷體; font-size:14pt">&#xa0;&#xa0;&#xa0;&#xa0;人受困</span>
+            <?php } ?>
           </p>
         </td>
       </tr>
@@ -311,23 +322,15 @@ function getTeamName($team)
             <span style="font-family:標楷體; font-size:15pt">：</span>
           </p>
           <p style="line-height:23pt; margin:0pt 0pt 0pt 4.8pt; orphans:0; padding-left:19.2pt; text-indent:-19.2pt; widows:0">
-            <span style="font-family:標楷體; font-size:15pt">一、</span>
-            <span style="font-family:標楷體; font-size:15pt">請各分隊於</span>
+            <span style="font-family:標楷體; font-size:15pt">一、請各分隊於</span>
             <span style="background-color:#d8d8d8; border-color:#000000; border-style:solid; border-width:0.75pt; font-size:16pt">
-              <span style="font-family:標楷體; font-size:15pt; font-weight:bold">T(指揮中心</span>
-              <span style="font-family:標楷體; font-size:16pt; font-weight:bold">派遣出勤查報時間</span>
-              <span style="font-family:標楷體; font-size:15pt; font-weight:bold">)+30</span>
-              <span style="font-family:標楷體; font-size:15pt; font-weight:bold">分</span>
+              <span style="font-family:標楷體; font-size:15pt; font-weight:bold">T(指揮中心派遣出勤查報時間)+30分</span>
             </span>
-            <span style="font-family:標楷體; font-size:15pt">前</span>
-            <span style="font-family:標楷體; font-size:15pt">將</span>
+            <span style="font-family:標楷體; font-size:15pt">前將</span>
             <span style="background-color:#d8d8d8; border-color:#000000; border-style:solid; border-width:0.75pt; font-family:標楷體; font-size:15pt; font-weight:bold">表一(有災情時連同表二)</span>
-            <span style="font-family:標楷體; font-size:15pt">回報</span>
-            <span style="font-family:標楷體; font-size:15pt">各所屬大隊，請各大隊於</span>
+            <span style="font-family:標楷體; font-size:15pt">回報各所屬大隊，請各大隊於</span>
             <span style="background-color:#d8d8d8; border-color:#000000; border-style:solid; border-width:0.75pt; font-family:標楷體; font-size:15pt; font-weight:bold">T+45分</span>
-            <span style="font-family:標楷體; font-size:15pt">前將資料彙整</span>
-            <span style="font-family:標楷體; font-size:15pt">回報</span>
-            <span style="font-family:標楷體; font-size:15pt">指揮科值勤官。</span>
+            <span style="font-family:標楷體; font-size:15pt">前將資料彙整回報指揮科值勤官。</span>
           </p>
           <p style="line-height:23pt; margin:0pt; orphans:0; widows:0">
             <span style="font-family:標楷體; font-size:15pt">二、各大隊暨指揮中心傳真電話：</span>
@@ -361,6 +364,7 @@ function getTeamName($team)
       <span style="font-family:標楷體; font-size:15pt">&#xa0;</span>
     </p>
   </div>
+  <p style="page-break-after:always"></p>
+  <?php } ?>
 </body>
-
 </html>
