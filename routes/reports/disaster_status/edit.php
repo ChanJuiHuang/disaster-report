@@ -128,7 +128,8 @@ function transformTime($time)
                     </div>
                     <div class="return_time">
                       回報災情時間：
-                      <input type="text" name="return_times[<?= $index ?>]" value="<?= $placeStatus ? $placeStatus[$index]['return_time'] : '' ?>">
+                      <input type="text" name="return_times[<?= $index ?>]" value="<?= $placeStatus ? $placeStatus[$index]['return_time'] : '' ?>" size="17">
+                      <img src="/disaster_report/public/clock.png" alt="clock" width="24px">
                     </div>
                   </div>
 
