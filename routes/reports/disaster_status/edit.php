@@ -118,17 +118,17 @@ function transformTime($time)
                     <input type="hidden" name="places[<?= $index ?>]" value="<?= $place['name'] ?>" required>
                     <div>
                       有無發生災情：
-                      <input type="radio" name="isHappenedDisaster[<?= $index ?>]" value="0" onclick="hiddenPlaceDisasters(<?= $index ?>); removeData(<?= count($places) ?>)" <?= $placeStatus ? isCheckStatus($placeStatus[$index], 'is_happened_disaster', 0) : '' ?>> 無
-                      <input id="happened_disaster_<?= $index ?>" type="radio" name="isHappenedDisaster[<?= $index ?>]" value="1" onclick="showPlaceDisasters(<?= $index ?>)" <?= $placeStatus ? isCheckStatus($placeStatus[$index], 'is_happened_disaster', 1) : ''?>> 有
+                      <input type="radio" name="isHappenedDisaster[<?= $index ?>]" value="0" onclick="hiddenPlaceDisasters(<?= $index ?>); removeData(<?= count($places) ?>)" <?= isset($placeStatus[$index]) ? isCheckStatus($placeStatus[$index], 'is_happened_disaster', 0) : '' ?>> 無
+                      <input id="happened_disaster_<?= $index ?>" type="radio" name="isHappenedDisaster[<?= $index ?>]" value="1" onclick="showPlaceDisasters(<?= $index ?>)" <?= isset($placeStatus[$index]) ? isCheckStatus($placeStatus[$index], 'is_happened_disaster', 1) : ''?>> 有
                     </div>
                     <div>
                       有無影響交通：
-                      <input type="radio" name="isEffectTraffic[<?= $index ?>]" value="0" <?= $placeStatus ? isCheckStatus($placeStatus[$index], 'is_effect_traffic', 0) : '' ?>> 無
-                      <input type="radio" name="isEffectTraffic[<?= $index ?>]" value="1" <?= $placeStatus ? isCheckStatus($placeStatus[$index], 'is_effect_traffic', 1) : '' ?>> 有
+                      <input type="radio" name="isEffectTraffic[<?= $index ?>]" value="0" <?= isset($placeStatus[$index]) ? isCheckStatus($placeStatus[$index], 'is_effect_traffic', 0) : '' ?>> 無
+                      <input type="radio" name="isEffectTraffic[<?= $index ?>]" value="1" <?= isset($placeStatus[$index]) ? isCheckStatus($placeStatus[$index], 'is_effect_traffic', 1) : '' ?>> 有
                     </div>
                     <div class="return_time">
                       回報災情時間：
-                      <input type="text" name="return_times[<?= $index ?>]" value="<?= $placeStatus ? $placeStatus[$index]['return_time'] : '' ?>" size="17">
+                      <input type="text" name="return_times[<?= $index ?>]" value="<?= isset($placeStatus[$index]) ? $placeStatus[$index]['return_time'] : '' ?>" size="17">
                       <img src="/disaster_report/public/clock.png" alt="clock" width="24px">
                     </div>
                   </div>
