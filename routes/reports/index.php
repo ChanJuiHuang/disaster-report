@@ -14,20 +14,15 @@ if (isset($_SERVER['QUERY_STRING'])) {
   parse_str($_SERVER['QUERY_STRING'], $queryString);
 }
 
-// try {
-//   $conn = new PDO($dsn, $db_user, $db_password);
-//   if ($_SESSION['team_NO'] === '01') {
-//     $query = "SELECT id, name, created_at FROM topics WHERE type = ? ORDER BY created_at;";
-//   } else {
-//     $query = "SELECT topics.id, topics.name, topics.created_at FROM topics JOIN teams_info ON topics.id = teams_info.topic_id WHERE topics.type = ? AND teams_info.team_id = '{$_SESSION['team_NO']}' ORDER BY topics.created_at;";
-//   }
-//   $topicsStmt = $conn->prepare($query);
-//   $topicsStmt->execute([$queryString['type']]);
-//   $topics = $topicsStmt->fetchAll(PDO::FETCH_ASSOC);
-// } catch (Exception $e) {
-//   header("Location: /disaster_report/routes/auth/logout.php?fail={$e->getCode()}");
-//   return;
-// }
+try {
+  $conn = new PDO($dsn, $db_user, $db_password);
+  $teamsStmt = $conn->prepare("SELECT name FROM teams WHERE id='{$queryString['team_id']}'");
+  $teamsStmt->execute();
+  $team = $teamsStmt->fetch(PDO::FETCH_ASSOC);
+} catch (Exception $e) {
+  header("Location: /disaster_report/routes/auth/logout.php?fail={$e->getCode()}");
+  return;
+}
 ?>
 
 <!DOCTYPE html>
@@ -41,7 +36,7 @@ if (isset($_SERVER['QUERY_STRING'])) {
     <div class="row">
       <div class="col-md-10 offset-md-1">
         <div class="card">
-          <div class="card-title card-header" style="font-size: 6vmin; text-align: center;">災情地點列表</div>
+          <div class="card-title card-header" style="font-size: 6vmin; text-align: center;"><?= $team['name'] ?>轄區災情資訊</div>
           <div class="card-body">
             <div class="row mb-3">
               <div class="col-md-10 offset-md-1">
@@ -58,7 +53,7 @@ if (isset($_SERVER['QUERY_STRING'])) {
             </div>
             <div class="row">
               <div class="col-md-10 offset-md-1">
-                <table class="table table-bordered">
+                <!-- <table class="table table-bordered">
                   <thead>
                     <tr>
                       <th scope="col">災情地點</th>
@@ -73,7 +68,7 @@ if (isset($_SERVER['QUERY_STRING'])) {
                     <tr>
                     </tr>
                   </tbody>
-                </table>
+                </table> -->
               </div>
             </div>
           </div>
