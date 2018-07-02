@@ -18,7 +18,7 @@ if (isset($_SERVER['QUERY_STRING'])) {
 function addQuoteToTime($time)
 {
   if ($time === '') {
-    return NULL;
+    return 'NULL';
   }
   return $time = "'" . $time . "'";
 }
