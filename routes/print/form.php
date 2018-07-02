@@ -24,13 +24,8 @@ try {
   $teamsStmt->execute();
   $team = $teamsStmt->fetch(PDO::FETCH_ASSOC);
 
-  // 取得查報時間
-  $topicsStmt = $conn->prepare("SELECT created_at FROM topics WHERE id={$queryString['topic_id']};");
-  $topicsStmt->execute();
-  $topic = $topicsStmt->fetch(PDO::FETCH_ASSOC);
-
   // 取得出勤資訊
-  $activeTeamInfoStmt = $conn->prepare("SELECT people_count, car_count FROM active_team_informations WHERE topic_id={$queryString['topic_id']} AND team_id='{$queryString['team_id']}'");
+  $activeTeamInfoStmt = $conn->prepare("SELECT people_count, car_count, sending_time FROM active_team_informations WHERE topic_id={$queryString['topic_id']} AND team_id='{$queryString['team_id']}'");
   $activeTeamInfoStmt->execute();
   $activeTeamInfo = $activeTeamInfoStmt->fetch(PDO::FETCH_ASSOC);
 
@@ -136,10 +131,10 @@ function showOtherDisasterName($disaster, $placeStatusId, $placeDisasters)
     </p>
     <p style="line-height:23pt; margin:0pt; orphans:0; widows:0">
       <span style="font-family:標楷體; font-size:15pt">查報時間：</span>
-      <span style="font-family:標楷體; font-size:15pt"><?= date('n', strtotime($topic['created_at'])) ?> 月</span>
-      <span style="font-family:標楷體; font-size:15pt"><?= date('d', strtotime($topic['created_at'])) ?> 日</span>
-      <span style="font-family:標楷體; font-size:15pt"><?= date('H', strtotime($topic['created_at'])) ?> 時</span>
-      <span style="font-family:標楷體; font-size:15pt"><?= date('i', strtotime($topic['created_at'])) ?> 分, </span>
+      <span style="font-family:標楷體; font-size:15pt"><?= date('n', strtotime($activeTeamInfo['sending_time'])) ?> 月</span>
+      <span style="font-family:標楷體; font-size:15pt"><?= date('d', strtotime($activeTeamInfo['sending_time'])) ?> 日</span>
+      <span style="font-family:標楷體; font-size:15pt"><?= date('H', strtotime($activeTeamInfo['sending_time'])) ?> 時</span>
+      <span style="font-family:標楷體; font-size:15pt"><?= date('i', strtotime($activeTeamInfo['sending_time'])) ?> 分, </span>
       <span style="font-family:標楷體; font-size:15pt"><?= $activeTeamInfo['car_count'] ?>車次, </span>
       <span style="font-family:標楷體; font-size:15pt"><?= $activeTeamInfo['people_count'] ?>人次, </span>
       <span style="font-family:標楷體; font-size:15pt">回傳人：</span>
