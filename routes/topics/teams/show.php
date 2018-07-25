@@ -33,7 +33,7 @@ try {
 
   // 統計資料
   $statisticDataStmt = $conn->prepare
-  ("SELECT team_name, car_count, people_count, place_name, description, hurt_people, dead_people, trapped_people, return_time, STRING_AGG(member_name, ', ') AS all_members, processing_situation, remark, current_situation, management_time, release_time, update_time FROM (
+  ("SELECT id, team_name, car_count, people_count, place_name, description, hurt_people, dead_people, trapped_people, return_time, STRING_AGG(member_name, ', ') AS all_members, processing_situation, remark, current_situation, management_time, release_time, update_time FROM (
     SELECT teams.id, teams.name AS team_name, active_team_informations.car_count, active_team_informations.people_count, place_status.name AS place_name, disaster_status.description, disaster_status.hurt_people, disaster_status.dead_people, disaster_status.trapped_people, place_status.return_time, active_members.name AS member_name, place_status.processing_situation, place_status.remark, place_status.current_situation, place_status.management_time, place_status.release_time, place_status.update_time FROM place_status
     JOIN teams ON teams.id = place_status.team_id
     JOIN active_team_informations ON active_team_informations.team_id = place_status.team_id AND active_team_informations.topic_id = place_status.topic_id
@@ -47,7 +47,6 @@ try {
   GROUP BY id, team_name, car_count, people_count, place_name, description, hurt_people, dead_people, trapped_people, return_time, processing_situation, remark, current_situation, management_time, release_time, update_time");
   $statisticDataStmt->execute();
   $statisticData = $statisticDataStmt->fetchAll(PDO::FETCH_ASSOC);
-  // var_dump($statisticData);
 } catch (Exception $e) {
   header("Location: /disaster_report/routes/auth/logout.php?fail={$e->getCode()}");
   return;
@@ -63,12 +62,12 @@ try {
   <?php include($_SERVER['DOCUMENT_ROOT'] . '/disaster_report/public/views/partials/_navbar.php'); ?>
   <div class="container">
     <div class="row">
-      <div class="col-md-10 offset-md-1">
+      <div class="col-md-12">
         <div class="card">
           <div class="card-title card-header" style="font-size: 6vmin; text-align: center;"><?= $topic['name'] ?></div>
           <div class="card-body">
             <div class="row mb-3">
-              <div class="col-md-10 offset-md-1">
+              <div class="col-md-12">
                 <?php if ($_SESSION['is_center']) { ?>
                 <a href="/disaster_report/routes/topics/edit.php?topic_id=<?= $queryString['topic_id'] ?>">
                   <button type="button" class="btn btn-secondary">編輯主題</button>
@@ -83,19 +82,19 @@ try {
               </div>
             </div>
             <div class="row">
-              <div class="col-md-10 offset-md-1">
-                <table class="table table-bordered">
+              <div class="col-md-12">
+                <table class="table table-bordered text-center">
                   <thead>
                     <tr>
-                      <th scope="col">出勤分隊</th>
+                      <th scope="col" style="width: 96px;">出勤分隊</th>
                       <th scope="col">車次</th>
                       <th scope="col">人次</th>
                       <th scope="col">地點</th>
-                      <th scope="col">災情概述</th>
+                      <th scope="col" style="width: 150px;">災情概述</th>
                       <th scope="col">處理情形</th>
                       <th scope="col">備註</th>
                       <th scope="col">目前狀況</th>
-                      <th scope="col">受傷、死亡、受困人數</th>
+                      <th scope="col" style="width: 90px;">受傷、死亡、受困人數</th>
                       <th scope="col">回報時間</th>
                       <th scope="col">出勤人員</th>
                       <th scope="col">列管時間</th>
@@ -106,7 +105,7 @@ try {
                   <tbody>
                     <?php foreach ($statisticData as $data) { ?>
                     <tr>
-                      <td><?= $data['team_name'] ?></td>
+                      <td><a href="/disaster_report/routes/reports/statistics/edit.php?topic_id=<?= $queryString['topic_id'] ?>&team_id=<?= $data['id'] ?>&name=<?= $data['place_name'] ?>"><?= $data['team_name'] ?></a></td>
                       <td><?= $data['car_count'] ?></td>
                       <td><?= $data['people_count'] ?></td>
                       <td><?= $data['place_name'] ?></td>
@@ -124,6 +123,8 @@ try {
                     <?php } ?>
                   </tbody>
                 </table>
+              </div>
+              <div class="col-md-10 offset-md-1">
                 <table class="table table-bordered">
                   <thead>
                     <tr>
