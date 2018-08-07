@@ -26,7 +26,7 @@ try {
   $places = $placesStmt->fetchAll(PDO::FETCH_ASSOC);
 
   // 取得place_status data
-  $placeStatusStmt = $conn->prepare("SELECT id, is_happened_disaster, is_effect_traffic, return_time FROM place_status WHERE topic_id={$queryString['topic_id']} AND team_id = '{$queryString['team_id']}'");
+  $placeStatusStmt = $conn->prepare("SELECT id, is_happened_disaster, is_effect_traffic, return_time, processing_situation, remark, current_situation, management_time, release_time FROM place_status WHERE topic_id={$queryString['topic_id']} AND team_id = '{$queryString['team_id']}'");
   $placeStatusStmt->execute();
   $placeStatus = $placeStatusStmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -131,6 +131,34 @@ function transformTime($time)
                       <input type="text" name="return_times[<?= $index ?>]" value="<?= isset($placeStatus[$index]) ? $placeStatus[$index]['return_time'] : '' ?>" size="17">
                       <img src="/disaster_report/public/clock.png" alt="clock" width="24px">
                     </div>
+                    <div id="place_status_<?= $index ?>" style="display: none">
+                      <div>
+                        <label for="processing_situation">處理情形：</label>
+                        <textarea rows="4" id="processing_situation" class="form-control" name="processing_situation[<?= $index ?>]"><?= isset($placeStatus[$index]) ? $placeStatus[$index]['processing_situation'] : '' ?></textarea>
+                      </div>
+                      <div>
+                        <label for="remark">備註：</label>
+                        <textarea rows="4" id="remark" class="form-control" name="remark[<?= $index ?>]"><?= isset($placeStatus[$index]) ? $placeStatus[$index]['remark'] : '' ?></textarea>
+                      </div>
+                      <div>
+                        <label for="current_situation">目前狀況：</label>
+                        <textarea rows="4" id="current_situation" class="form-control" name="current_situation[<?= $index ?>]"><?= isset($placeStatus[$index]) ? $placeStatus[$index]['current_situation'] : '' ?></textarea>
+                      </div>
+                      <div class="form-group management_time">
+                        <label for="management_time">
+                          列管時間：
+                          <img src="/disaster_report/public/clock.png" alt="clock" width="20px">
+                        </label>
+                        <input id="management_time" type="text" class="form-control" name="management_time[<?= $index ?>]" value="<?= isset($placeStatus[$index]) ? $placeStatus[$index]['management_time'] : '' ?>">
+                      </div>
+                      <div class="form-group release_time">
+                        <label for="release_time">
+                          解除時間：
+                          <img src="/disaster_report/public/clock.png" alt="clock" width="20px">
+                        </label>
+                        <input type="text" class="form-control" name="release_time[<?= $index ?>]" value="<?= isset($placeStatus[$index]) ? $placeStatus[$index]['release_time'] : '' ?>">
+                      </div>
+                    </div>
                   </div>
 
                   <div class="form-group" id="place_disasters_<?= $index ?>" style="display: none">
@@ -220,6 +248,13 @@ function transformTime($time)
   $('.return_time').click(function () {
     $(this).children('input').val(getDate())
   })
+  $('.management_time').click(function () {
+    $(this).children('input').val(getDate())
+  })
+
+  $('.release_time').click(function () {
+    $(this).children('input').val(getDate())
+  })
 
   function getDate() {
     let date = new Date()
@@ -233,11 +268,13 @@ function transformTime($time)
   }
 
   function hiddenPlaceDisasters(index) {
+    $(`#place_status_${index}`).hide()
     $(`#place_disasters_${index}`).hide()
     $(`#disaster_status_${index}`).hide()
   }
 
   function showPlaceDisasters(index) {
+    $(`#place_status_${index}`).show()
     $(`#place_disasters_${index}`).show()
     $(`#disaster_status_${index}`).show()
   }
