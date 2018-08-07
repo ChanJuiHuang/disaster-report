@@ -27,6 +27,11 @@ $places = [];
 $isHappenedDisaster = [];
 $isEffectTraffic = [];
 $return_times = [];
+$processing_situation = [];
+$remark = [];
+$current_situation = [];
+$management_time = [];
+$release_time = [];
 $disasters = [];
 $other_disaster = NULL;
 $cities = [];
@@ -35,6 +40,7 @@ $descriptions = [];
 $hurt_people = [];
 $dead_people = [];
 $trapped_people = [];
+$update_time = addQuote(date('Y-m-d H:i:s', time()));
 extract($_POST, EXTR_IF_EXISTS);
 
 try {
@@ -56,10 +62,15 @@ try {
       $isHappenedDisaster[$index] = addQuote($isHappenedDisaster[$index]);
       $isEffectTraffic[$index] = addQuote($isEffectTraffic[$index]);
       $return_times[$index] = addQuote($return_times[$index]);
+      $processing_situation[$index] = addQuote($processing_situation[$index]);
+      $remark[$index] = addQuote($remark[$index]);
+      $current_situation[$index] = addQuote($current_situation[$index]);
+      $management_time[$index] = addQuote($management_time[$index]);
+      $release_time[$index] = addQuote($release_time[$index]);
 
-      $placeholders[] = "('{$place}', {$isHappenedDisaster[$index]}, {$isEffectTraffic[$index]}, {$return_times[$index]}, {$queryString['topic_id']}, '{$queryString['team_id']}')";
-      $placeStatusStmt = $conn->prepare("INSERT INTO place_status(name, is_happened_disaster, is_effect_traffic, return_time, topic_id, team_id) VALUES " . join(',', $placeholders));
-      $placeStatusStmt->execute();
+      $placeholders[] = "('{$place}', {$isHappenedDisaster[$index]}, {$isEffectTraffic[$index]}, {$return_times[$index]}, {$queryString['topic_id']}, '{$queryString['team_id']}', {$processing_situation[$index]}, {$remark[$index]}, {$current_situation[$index]}, {$management_time[$index]}, {$release_time[$index]}, {$update_time})";
+      $placeStatusStmt = $conn->prepare("INSERT INTO place_status(name, is_happened_disaster, is_effect_traffic, return_time, topic_id, team_id, processing_situation, remark, current_situation, management_time, release_time, update_time) VALUES " . join(',', $placeholders));
+      $placeStatusStmt->execute(); 
       $place_status_ids[$index] = $conn->lastInsertId();
     }
   }
