@@ -118,7 +118,7 @@ function transformTime($time)
                     <input type="hidden" name="places[<?= $index ?>]" value="<?= $place['name'] ?>" required>
                     <div>
                       有無發生災情：
-                      <input type="radio" name="isHappenedDisaster[<?= $index ?>]" value="0" onclick="hiddenPlaceDisasters(<?= $index ?>); removeData(<?= count($places) ?>)" <?= isset($placeStatus[$index]) ? isCheckStatus($placeStatus[$index], 'is_happened_disaster', 0) : '' ?>> 無
+                      <input type="radio" name="isHappenedDisaster[<?= $index ?>]" value="0" onclick="hiddenPlaceDisasters(<?= $index ?>); removeData(<?= $index ?>)" <?= isset($placeStatus[$index]) ? isCheckStatus($placeStatus[$index], 'is_happened_disaster', 0) : '' ?>> 無
                       <input id="happened_disaster_<?= $index ?>" type="radio" name="isHappenedDisaster[<?= $index ?>]" value="1" onclick="showPlaceDisasters(<?= $index ?>)" <?= isset($placeStatus[$index]) ? isCheckStatus($placeStatus[$index], 'is_happened_disaster', 1) : ''?>> 有
                     </div>
                     <div>
@@ -287,12 +287,13 @@ function transformTime($time)
     }
   }
 
-  function removeData(disasterCount) {
-    for (let i = 0; i < disasterCount; i++) {
-      $(`#place_disasters_${i} input`).prop('checked', false)
-      $(`#place_disasters_${i} div:nth-last-child(1) input:nth-last-child(1)`).val('')
-      $(`#disaster_status_${i} input`).val('')
-    }
+  function removeData(index) {
+    $(`#place_status_${index} textarea`).val('')
+    $(`#place_status_${index} input`).val('')
+    $(`#place_disasters_${index} input`).prop('checked', false)
+    $(`#place_disasters_${index} div:nth-last-child(1) input:nth-last-child(1)`).val('')
+    $(`#disaster_status_${index} input`).val('')
+    $(`#disaster_status_${index} textarea`).val('')
   }
 
   checkHappenedDisaster(<?= count($places) ?>)
