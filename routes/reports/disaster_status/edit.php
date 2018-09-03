@@ -164,32 +164,32 @@ function transformTime($time)
                   <div class="form-group" id="place_disasters_<?= $index ?>" style="display: none">
                     <label>地點狀況：</label>
                     <div>
-                      <input type="checkbox" name="disasters[<?= $index ?>][]" value="路樹災情" <?= $placeStatus ? isCheckDisaster($placeDisasters, "路樹災情", $placeStatus[$index]['id']) : '' ?>> 路樹災情
-                      <input type="checkbox" name="disasters[<?= $index ?>][]" value="廣告招牌災情" <?= $placeStatus ? isCheckDisaster($placeDisasters, "廣告招牌災情", $placeStatus[$index]['id']) : '' ?>> 廣告招牌災情
+                      <input type="checkbox" name="disasters[<?= $index ?>][]" value="路樹災情" <?= isset($placeStatus[$index]) ? isCheckDisaster($placeDisasters, "路樹災情", $placeStatus[$index]['id']) : '' ?>> 路樹災情
+                      <input type="checkbox" name="disasters[<?= $index ?>][]" value="廣告招牌災情" <?= isset($placeStatus[$index]) ? isCheckDisaster($placeDisasters, "廣告招牌災情", $placeStatus[$index]['id']) : '' ?>> 廣告招牌災情
                     </div>
                     <div>
-                      <input type="checkbox" name="disasters[<?= $index ?>][]" value="道路、隧道災情" <?= $placeStatus ? isCheckDisaster($placeDisasters, "道路、隧道災情", $placeStatus[$index]['id']) : '' ?>> 道路、隧道災情
-                      <input type="checkbox" name="disasters[<?= $index ?>][]" value="橋樑災情" <?= $placeStatus ? isCheckDisaster($placeDisasters, "橋樑災情", $placeStatus[$index]['id']) : '' ?>> 橋樑災情
+                      <input type="checkbox" name="disasters[<?= $index ?>][]" value="道路、隧道災情" <?= isset($placeStatus[$index]) ? isCheckDisaster($placeDisasters, "道路、隧道災情", $placeStatus[$index]['id']) : '' ?>> 道路、隧道災情
+                      <input type="checkbox" name="disasters[<?= $index ?>][]" value="橋樑災情" <?= isset($placeStatus[$index]) ? isCheckDisaster($placeDisasters, "橋樑災情", $placeStatus[$index]['id']) : '' ?>> 橋樑災情
                     </div>
                     <div>
-                      <input type="checkbox" name="disasters[<?= $index ?>][]" value="鐵路、高鐵災情" <?= $placeStatus ? isCheckDisaster($placeDisasters, "鐵路、高鐵災情", $placeStatus[$index]['id']) : '' ?>> 鐵路、高鐵災情
-                      <input type="checkbox" name="disasters[<?= $index ?>][]" value="積淹水災情" <?= $placeStatus ? isCheckDisaster($placeDisasters, "積淹水災情", $placeStatus[$index]['id']) : '' ?>> 積淹水災情
+                      <input type="checkbox" name="disasters[<?= $index ?>][]" value="鐵路、高鐵災情" <?= isset($placeStatus[$index]) ? isCheckDisaster($placeDisasters, "鐵路、高鐵災情", $placeStatus[$index]['id']) : '' ?>> 鐵路、高鐵災情
+                      <input type="checkbox" name="disasters[<?= $index ?>][]" value="積淹水災情" <?= isset($placeStatus[$index]) ? isCheckDisaster($placeDisasters, "積淹水災情", $placeStatus[$index]['id']) : '' ?>> 積淹水災情
                     </div>
                     <div>
-                      <input type="checkbox" name="disasters[<?= $index ?>][]" value="土石災情" <?= $placeStatus ? isCheckDisaster($placeDisasters, "土石災情", $placeStatus[$index]['id']) : '' ?>> 土石災情
-                      <input type="checkbox" name="disasters[<?= $index ?>][]" value="建物毀損" <?= $placeStatus ? isCheckDisaster($placeDisasters, "建物毀損", $placeStatus[$index]['id']) : '' ?>> 建物毀損
+                      <input type="checkbox" name="disasters[<?= $index ?>][]" value="土石災情" <?= isset($placeStatus[$index]) ? isCheckDisaster($placeDisasters, "土石災情", $placeStatus[$index]['id']) : '' ?>> 土石災情
+                      <input type="checkbox" name="disasters[<?= $index ?>][]" value="建物毀損" <?= isset($placeStatus[$index]) ? isCheckDisaster($placeDisasters, "建物毀損", $placeStatus[$index]['id']) : '' ?>> 建物毀損
                     </div>
                     <div>
-                      <input type="checkbox" name="disasters[<?= $index ?>][]" value="水利設施災害" <?= $placeStatus ? isCheckDisaster($placeDisasters, "水利設施災害", $placeStatus[$index]['id']) : '' ?>> 水利設施災害
-                      <input type="checkbox" name="disasters[<?= $index ?>][]" value="民生、基礎設施災情" <?= $placeStatus ? isCheckDisaster($placeDisasters, "民生、基礎設施災情", $placeStatus[$index]['id']) : '' ?>> 民生、基礎設施災情
+                      <input type="checkbox" name="disasters[<?= $index ?>][]" value="水利設施災害" <?= isset($placeStatus[$index]) ? isCheckDisaster($placeDisasters, "水利設施災害", $placeStatus[$index]['id']) : '' ?>> 水利設施災害
+                      <input type="checkbox" name="disasters[<?= $index ?>][]" value="民生、基礎設施災情" <?= isset($placeStatus[$index]) ? isCheckDisaster($placeDisasters, "民生、基礎設施災情", $placeStatus[$index]['id']) : '' ?>> 民生、基礎設施災情
                     </div>
                     <div>
-                      <input type="checkbox" name="disasters[<?= $index ?>][]" value="車輛及交通事故災情" <?= $placeStatus ? isCheckDisaster($placeDisasters, "車輛及交通事故災情", $placeStatus[$index]['id']) : '' ?>> 車輛及交通事故災情
-                      <input type="checkbox" name="disasters[<?= $index ?>][]" value="火災" <?= $placeStatus ? isCheckDisaster($placeDisasters, "火災", $placeStatus[$index]['id']) : '' ?>> 火災
+                      <input type="checkbox" name="disasters[<?= $index ?>][]" value="車輛及交通事故災情" <?= isset($placeStatus[$index]) ? isCheckDisaster($placeDisasters, "車輛及交通事故災情", $placeStatus[$index]['id']) : '' ?>> 車輛及交通事故災情
+                      <input type="checkbox" name="disasters[<?= $index ?>][]" value="火災" <?= isset($placeStatus[$index]) ? isCheckDisaster($placeDisasters, "火災", $placeStatus[$index]['id']) : '' ?>> 火災
                     </div>
                     <div>
-                      <input type="checkbox" name="disasters[<?= $index ?>][]" value="other" <?= $placeStatus ? isCheckDisaster($placeDisasters, "other", $placeStatus[$index]['id']) : '' ?>> 其他災害情形:
-                      <input type="text" name="other_disaster[<?= $index ?>]" value="<?= $placeStatus ? getOtherDisaster($placeDisasters, $placeStatus[$index]['id']) : '' ?>">
+                      <input type="checkbox" name="disasters[<?= $index ?>][]" value="other" <?= isset($placeStatus[$index]) ? isCheckDisaster($placeDisasters, "other", $placeStatus[$index]['id']) : '' ?>> 其他災害情形:
+                      <input type="text" name="other_disaster[<?= $index ?>]" value="<?= isset($placeStatus[$index]) ? getOtherDisaster($placeDisasters, $placeStatus[$index]['id']) : '' ?>">
                     </div>
                   </div>
 
@@ -197,29 +197,29 @@ function transformTime($time)
                     <label>災情概述：</label>
                     <div>
                       <label for="cities">發生鄉/鎮/市：</label>
-                      <input type="text" id="cities" name="cities[<?= $index ?>]" value="<?= $placeStatus ? getDisasterStatus($disasterStatus, "city", $placeStatus[$index]['id']) : '' ?>">
+                      <input type="text" id="cities" name="cities[<?= $index ?>]" value="<?= isset($placeStatus[$index]) ? getDisasterStatus($disasterStatus, "city", $placeStatus[$index]['id']) : '' ?>">
                     </div>
                     <div>
                       <label for="happened_places">發生地點：</label>
-                      <input type="text" id="happened_places" name="happened_places[<?= $index ?>]" value="<?= $placeStatus ? getDisasterStatus($disasterStatus, "address", $placeStatus[$index]['id']) : '' ?>">
+                      <input type="text" id="happened_places" name="happened_places[<?= $index ?>]" value="<?= isset($placeStatus[$index]) ? getDisasterStatus($disasterStatus, "address", $placeStatus[$index]['id']) : '' ?>">
                     </div>
 
                     <label for="descriptions">災情概述：</label>
                     <div>
-                      <textarea rows="4" cols="50" id="descriptions" name="descriptions[<?= $index ?>]"><?= $placeStatus ? getDisasterStatus($disasterStatus, "description", $placeStatus[$index]['id']) : '' ?></textarea>
+                      <textarea rows="4" cols="50" id="descriptions" name="descriptions[<?= $index ?>]"><?= isset($placeStatus[$index]) ? getDisasterStatus($disasterStatus, "description", $placeStatus[$index]['id']) : '' ?></textarea>
                     </div>
 
                     <div>
                       <label for="hurt_people">受傷人數：</label>
-                      <input type="text" id="hurt_people" name="hurt_people[<?= $index ?>]" value="<?= $placeStatus ? getDisasterStatus($disasterStatus, "hurt_people", $placeStatus[$index]['id']) : '' ?>">
+                      <input type="text" id="hurt_people" name="hurt_people[<?= $index ?>]" value="<?= isset($placeStatus[$index]) ? getDisasterStatus($disasterStatus, "hurt_people", $placeStatus[$index]['id']) : '' ?>">
                     </div>
                     <div>
                       <label for="dead_people">死亡人數：</label>
-                      <input type="text" id="dead_people" name="dead_people[<?= $index ?>]" value="<?= $placeStatus ? getDisasterStatus($disasterStatus, "dead_people", $placeStatus[$index]['id']) : '' ?>">
+                      <input type="text" id="dead_people" name="dead_people[<?= $index ?>]" value="<?= isset($placeStatus[$index]) ? getDisasterStatus($disasterStatus, "dead_people", $placeStatus[$index]['id']) : '' ?>">
                     </div>
                     <div>
                       <label for="trapped_people">受困人數：</label>
-                      <input type="text" id="trapped_people" name="trapped_people[<?= $index ?>]" value="<?= $placeStatus ? getDisasterStatus($disasterStatus, "trapped_people", $placeStatus[$index]['id']) : '' ?>">
+                      <input type="text" id="trapped_people" name="trapped_people[<?= $index ?>]" value="<?= isset($placeStatus[$index]) ? getDisasterStatus($disasterStatus, "trapped_people", $placeStatus[$index]['id']) : '' ?>">
                     </div>
                   </div>
                   <hr>
