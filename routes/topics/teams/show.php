@@ -86,17 +86,17 @@ try {
                 <table class="table table-bordered text-center">
                   <thead>
                     <tr>
-                      <th scope="col" style="width: 96px;">出勤分隊</th>
+                      <th scope="col">出勤分隊</th>
                       <th scope="col">車次</th>
                       <th scope="col">人次</th>
                       <th scope="col">地點</th>
                       <th scope="col" style="width: 150px;">災情概述</th>
-                      <th scope="col">處理情形</th>
+                      <th scope="col" style="width: 150px;">處理情形</th>
                       <th scope="col">備註</th>
                       <th scope="col">目前狀況</th>
-                      <th scope="col" style="width: 90px;">受傷、死亡、受困人數</th>
+                      <th scope="col">受傷、死亡、受困人數</th>
                       <th scope="col">回報時間</th>
-                      <th scope="col">出勤人員</th>
+                      <th scope="col" style="width: 100px;">出勤人員</th>
                       <th scope="col">列管時間</th>
                       <th scope="col">解除時間</th>
                       <th scope="col">更新時間</th>
