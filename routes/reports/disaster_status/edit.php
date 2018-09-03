@@ -162,7 +162,7 @@ function transformTime($time)
                   </div>
 
                   <div class="form-group" id="place_disasters_<?= $index ?>" style="display: none">
-                    <label>地點狀況：</label>
+                    <label>地點狀況：(必須勾選)</label>
                     <div>
                       <input type="checkbox" name="disasters[<?= $index ?>][]" value="路樹災情" <?= isset($placeStatus[$index]) ? isCheckDisaster($placeDisasters, "路樹災情", $placeStatus[$index]['id']) : '' ?>> 路樹災情
                       <input type="checkbox" name="disasters[<?= $index ?>][]" value="廣告招牌災情" <?= isset($placeStatus[$index]) ? isCheckDisaster($placeDisasters, "廣告招牌災情", $placeStatus[$index]['id']) : '' ?>> 廣告招牌災情
